@@ -108,7 +108,7 @@ def register(request):
         email = request.POST.get('email')
         name = request.POST.get('name')
         password = request.POST.get('password')
-zfdnk
+
         # Save Insurance Enquiry
         Users.objects.create(
             email=email,
