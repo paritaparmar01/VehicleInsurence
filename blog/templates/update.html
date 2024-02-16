@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block start %}
+   
+        
+        <form class= "col-6  mx-auto mt-4 card p-3 bg-danger" action=""  method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">name</label>
+              <input type="text" name = "name" value = "{{recepie.recepie_name}}" required class="form-control"  >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">description</label>
+              <textarea type="textarea" name = "des" required class="form-control" >{{recepie.recepie_des}}</textarea>
+            </div>
+            <div class="mb-3 ">
+                <label >image</label>
+              <input type="file" name="img" >
+            </div>
+            <button type="submit"  class="btn btn-success">UPDATE</button>
+        </form>
+
+{% endblock %}

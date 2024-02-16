@@ -1,0 +1,422 @@
+DEBUG:root:Variable value: PolicyIssue
+WARNING:django.request:Not Found: /exporttoexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /exporttoexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /exporttoexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /exporttoexcel/css/style.css
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /exporttoexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /try/css/bootstrap.min.css
+WARNING:django.request:Not Found: /try/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /try/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /try/css/style.css
+WARNING:django.request:Not Found: /try/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /try/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /try/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /try/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /try/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /try/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /trypolicy/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /trypolicy/css/bootstrap.min.css
+WARNING:django.request:Not Found: /trypolicy/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /trypolicy/css/style.css
+WARNING:django.request:Not Found: /trypolicy/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /trypolicy/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /trypolicy/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+ERROR:django.request:Internal Server Error: /policyissue/
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\django\db\models\fields\__init__.py", line 1800, in to_python
+    decimal_value = decimal.Decimal(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+decimal.InvalidOperation: [<class 'decimal.ConversionSyntax'>]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\sos\vehicle_insurence (7-2-2024)\vehicle_insurence\blog\views.py", line 510, in policy_issue
+    PolicyIssue.objects.create(
+  File "C:\Python312\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\query.py", line 677, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 822, in save
+    self.save_base(
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\query.py", line 1845, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    for sql, params in self.as_sql():
+                       ^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1747, in as_sql
+    self.prepare_value(field, self.pre_save_val(field, obj))
+  File "C:\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1686, in prepare_value
+    return field.get_db_prep_save(value, connection=self.connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\fields\__init__.py", line 1819, in get_db_prep_save
+    self.to_python(value), self.max_digits, self.decimal_places
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\fields\__init__.py", line 1802, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“” value must be a decimal number.']
+ERROR:django.request:Internal Server Error: /policyissue/
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\django\db\models\fields\__init__.py", line 1800, in to_python
+    decimal_value = decimal.Decimal(value)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+decimal.InvalidOperation: [<class 'decimal.ConversionSyntax'>]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\sos\vehicle_insurence (7-2-2024)\vehicle_insurence\blog\views.py", line 510, in policy_issue
+    PolicyIssue.objects.create(
+  File "C:\Python312\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\query.py", line 677, in create
+    obj.save(force_insert=True, using=self.db)
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 822, in save
+    self.save_base(
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 909, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 1067, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\base.py", line 1108, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\query.py", line 1845, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    for sql, params in self.as_sql():
+                       ^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1747, in as_sql
+    self.prepare_value(field, self.pre_save_val(field, obj))
+  File "C:\Python312\Lib\site-packages\django\db\models\sql\compiler.py", line 1686, in prepare_value
+    return field.get_db_prep_save(value, connection=self.connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\fields\__init__.py", line 1819, in get_db_prep_save
+    self.to_python(value), self.max_digits, self.decimal_places
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\db\models\fields\__init__.py", line 1802, in to_python
+    raise exceptions.ValidationError(
+django.core.exceptions.ValidationError: ['“” value must be a decimal number.']
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /try/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /try/css/bootstrap.min.css
+WARNING:django.request:Not Found: /try/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /try/css/style.css
+WARNING:django.request:Not Found: /try/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /try/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /try/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /try/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /try/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /try/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /trypolicy/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /trypolicy/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /trypolicy/css/style.css
+WARNING:django.request:Not Found: /trypolicy/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /trypolicy/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /trypolicy/css/bootstrap.min.css
+WARNING:django.request:Not Found: /trypolicy/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /trypolicy/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /trypolicy/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /try/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /try/css/bootstrap.min.css
+WARNING:django.request:Not Found: /try/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /try/css/style.css
+WARNING:django.request:Not Found: /try/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /try/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /try/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /try/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /try/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /try/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /trypolicy/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /trypolicy/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /trypolicy/css/bootstrap.min.css
+WARNING:django.request:Not Found: /trypolicy/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /trypolicy/css/style.css
+WARNING:django.request:Not Found: /trypolicy/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /trypolicy/js/main.js
+WARNING:django.request:Not Found: /trypolicy/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /policyissue/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /policyissue/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /policyissue/js/main.js
+WARNING:django.request:Not Found: /exporttoexcel/css/style.css
+WARNING:django.request:Not Found: /exporttoexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /exporttoexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /exporttoexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /exporttoexcel/js/main.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/counterup/counterup.min.js
+WARNING:django.request:Not Found: /exporttoexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/easing/easing.min.js
+WARNING:django.request:Not Found: /uploadexcel/lib/animate/animate.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/wow/wow.min.js
+WARNING:django.request:Not Found: /uploadexcel/css/style.css
+WARNING:django.request:Not Found: /uploadexcel/css/bootstrap.min.css
+WARNING:django.request:Not Found: /uploadexcel/lib/owlcarousel/assets/owl.carousel.min.css
+WARNING:django.request:Not Found: /uploadexcel/static/lib/owlcarousel/owl.carousel.min.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/waypoints/waypoints.min.js
+WARNING:django.request:Not Found: /img/carousel-1.jpg
+WARNING:django.request:Not Found: /uploadexcel/js/main.js
+WARNING:django.request:Not Found: /uploadexcel/static/lib/counterup/counterup.min.js
+ERROR:django.request:Internal Server Error: /uploadexcel/
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3802, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 153, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 182, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Date'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\sos\vehicle_insurence (7-2-2024)\vehicle_insurence\blog\views.py", line 559, in upload_excel
+    date=row['Date'],
+         ~~~^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\series.py", line 1111, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\series.py", line 1227, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3809, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Date'

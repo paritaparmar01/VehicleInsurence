@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Insurance Enquiry Form</title>
+</head>
+<body>
+    {% if 'isLoggedin' not in request.session %}
+    <script>window.location.href = "/login/";</script>
+{% endif %}
+<style>
+    /* Add your styles here */
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    /* Adjusted margin for the "Add Another Vehicle" button */
+    #addVehicleBtn {
+        margin-top: 10px;
+    }
+</style>
+<form class="card my-3" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row align-items-start mt-5 fw-bold">
+        <div class="col-6 offset-3">
+            <div class="container-fluid">
+                <h2 class='card mt-1 text-center bg-info'>Insurance Enquiry</h2>
+                <div class="mb-3 mx-5 mt-5">
+                    <label for="exampleInputEmail1" class="form-label">Name<span class="text-danger">*</span></label>
+                    <input type="text" name='name' class="form-control" required>
+                </div>
+                <div class='row d-flex'>
+                    <div class="col-4 mb-3 mx-5">
+                        <label for="exampleInputNumber" class="form-label">Mobile Number<span class="text-danger">*</span></label>
+                        <input type="tel" name='number' class="form-control" pattern="^[0-9]{10}$" maxlength="10"
+                            required placeholder="Enter 10-digit number">
+                    </div>
+                    <div class="col-4 mb-3 mx-5">
+                        <label for="exampleInputEmail1" class="form-label">Email </label>
+                        <input type="email" class="form-control" name='email' id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                </div>
+
+                <!-- Vehicle information fields (can be repeated dynamically) -->
+                <div id="fieldsContainer">
+                    <div class="vehicle-fields">
+                        <div class="mb-3 mx-5">
+                            <label for="vehicleNumber" class="form-label fw-bold">Vehicle Number</label>
+                            <input type="text" class="form-control" name="vehicle_number[]" required>
+                        </div>
+
+                        <!-- RC Book field with radio buttons -->
+                        <div class="mb-3 mx-5">
+                            <p class="form-label fw-bold">RC Book</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="rc_book_radio" id="rcBookRadioYes" value="yes" onchange="toggleRcBookImageField()">
+                                <label class="form-check-label" for="rcBookRadioYes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="rc_book_radio" id="rcBookRadioNo" value="no" onchange="toggleRcBookImageField()">
+                                <label class="form-check-label" for="rcBookRadioNo">No</label>
+                            </div>
+                        </div>
+
+                        <!-- RC Book image field -->
+                        <div id="rcBookInputField" class="mb-3 mx-5" style="display: none;">
+                            <label for="rcBook" class="form-label fw-bold">RC Book (Image/PDF)</label>
+                            <input type="file" name="rc_book_image[]">
+                        </div>
+
+                        <!-- Previous Policy field with radio buttons -->
+                        <div class="mb-3 mx-5">
+                            <p class="form-label fw-bold">Previous Policy</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="previous_policy_radio" id="previousPolicyRadioYes" value="yes" onchange="togglePreviousPolicyFields()">
+                                <label class="form-check-label" for="previousPolicyRadioYes">Yes</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="previous_policy_radio" id="previousPolicyRadioNo" value="no" onchange="togglePreviousPolicyFields()">
+                                <label class="form-check-label" for="previousPolicyRadioNo">No</label>
+                            </div>
+                        </div>
+
+                        <!-- Previous Policy fields -->
+                        <div id="previousPolicyFields" style="display: none;">
+                            <div class="col-6 mb-3 mt-3 mx-5">
+                                <label for="previousPolicyImage" class="form-label fw-bold">Previous Policy (Image/PDF)</label>
+                                <input type="file" name="previous_policy_image[]">
+                            </div>
+                            <div class="date-fields mb-3 mx-5 mt-5">
+                                <div class="form-group">
+                                    <label for="endDate" class="form-label fw-bold">Policy End Date</label>
+                                    <input type="date" class="form-control" name="end_date[]">
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %} <button type="button" onclick="deleteFields(this)" class="btn btn-danger" disabled>Delete</button> {% endcomment %}
+
+                    </div>
+                </div>
+
+                <!-- Add Another Vehicle button -->
+                {% comment %} <button type="button" onclick="addFields()" class="btn btn-primary mt-1">Add Another Vehicle</button> {% endcomment %}
+
+                <!-- Submit button -->
+                <button type="submit" class="col-2 btn btn-success mt-2">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
+<center><h4 style="color: blue;">Data Records</h4></center>
+  <table border="5">
+    <tr>
+      <th style="border: 2px solid black;">mobile</th>
+      <th style="border: 2px solid black;">name</th>
+      <th style="border: 2px solid black;">email</th>
+      <th style="border: 2px solid black;">vehicle</th>
+      <th style="border: 2px solid black;">RC book</th>
+      <th style="border: 2px solid black;">RC book image</th>
+      <th style="border: 2px solid black;">Previous policy</th>
+      <th style="border: 2px solid black;">Previous policy image</th>
+      <th style="border: 2px solid black;">End Date</th>
+      </tr>
+      {% for i in data %}
+      <tr>
+        <td style="border: 2px solid black;">{{i.mobile}}</td>
+        <td style="border: 2px solid black;">{{i.name}}</td>
+        <td style="border: 2px solid black;">{{i.email}}</td>
+        <td style="border: 2px solid black;">{{i.vehicle_number}}</td>
+        <td style="border: 2px solid black;">{{i.rc_book}}</td>
+        <td style="border: 2px solid black;">{{i.rc_book_image}}</td>
+        <td style="border: 2px solid black;">{{i.previous_policy}}</td>
+        <td style="border: 2px solid black;">{{i.previous_policy_image}}</td>
+        <td style="border: 2px solid black;">{{i.end_date}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+
+<!-- JavaScript code for adding and deleting fields -->
+<script>
+    function toggleRcBookImageField() {
+        var rcBookRadioYes = document.getElementById('rcBookRadioYes');
+        var rcBookInputField = document.getElementById('rcBookInputField');
+        if (rcBookRadioYes.checked) {
+            rcBookInputField.style.display = 'block';
+        } else {
+            rcBookInputField.style.display = 'none';
+        }
+    }
+
+    function togglePreviousPolicyFields() {
+        var previousPolicyRadioYes = document.getElementById('previousPolicyRadioYes');
+        var previousPolicyFields = document.getElementById('previousPolicyFields');
+        if (previousPolicyRadioYes.checked) {
+            previousPolicyFields.style.display = 'block';
+        } else {
+            previousPolicyFields.style.display = 'none';
+        }
+    }
+</script>
+     
+</body>
+</html>

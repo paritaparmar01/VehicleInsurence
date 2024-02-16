@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <title>Loan Enquiry Form</title>
+    <style>
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #addVehicleBtn {
+            margin-top: 10px;
+        }
+
+        .delete-button {
+            color: red;
+            cursor: pointer;
+            background: none;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="card my-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+    <div class="row align-items-start mt-5 fw-bold">
+        <div class="col-6 offset-3">
+            <div class="container-fluid">
+                <form class="card my-3" method="POST" enctype="multipart/form-data">
+                    <h2 class='card mt-1 text-center bg-info'>Upload Policy Issue Data</h2>
+
+                        <!-- CSV File -->
+                        <div class="mb-3 col-6 mx-5">
+                            <label for="rcBookImage" class="form-label fw-bold">Upload CSV</label>
+                            <input type="file" name="CSVPolicy" required>
+                        </div>
+                        
+                    <!-- Button to Submit the Form -->
+                    <button type="submit" class="btn btn-primary col-10 mb-3 mx-5">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addDocumentField() {
+            var clone = document.querySelector('#defaultDocumentField').cloneNode(true);
+            var deleteButton = clone.querySelector('.delete-button');
+
+            deleteButton.addEventListener('click', function () {
+                deleteDocumentField(this);
+            });
+
+            deleteButton.removeAttribute('disabled'); // Enable delete button for cloned document field
+
+            clone.querySelectorAll("input").forEach(function (input) {
+                input.value = ""; // Clear values in cloned inputs
+            });
+
+            // Append document item to the list
+            var documentContainer = document.getElementById('documentContainer');
+            documentContainer.appendChild(clone);
+        }
+
+        function deleteDocumentField(button) {
+            var parentDiv = button.parentElement;
+            var isDefaultField = parentDiv.classList.contains('document-fields') && parentDiv.id === 'defaultDocumentField';
+
+            // Check if the clicked element is the default document field
+            // If it is, do not remove it
+            if (!isDefaultField && confirm('Are you sure you want to delete this document?')) {
+                parentDiv.remove();
+            }
+        }
+    </script> {% endcomment %}
+</form>
+</body>
+
+</html>

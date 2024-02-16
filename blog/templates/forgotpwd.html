@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block start %}
+  
+
+
+<form class= "col-6 mx-auto mt-4 card p-3 bg-dark text-white" action=""  method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if messages %}
+    <div class="alert alert-primary" role="alert" >   
+      {% for message in messages %}
+      {{message}}
+      {% endfor %}
+    </div>
+  {% endif %}
+  <center><h2>FORGOT PASSWORD</h2></center>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email : </label>
+    <input type="text" name = 'email' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">New Password</label>
+    <input type="password" name='password' class="form-control" id="exampleInputPassword1">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Change Password</button>
+</form>
+
+
+
+
+{% endblock %}
