@@ -1,9 +1,34 @@
-{% extends "base.html" %}
-{% block start %}
+<!doctype html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S.O.S FINANCE</title>
+  <link rel="shortcut icon" type="image/png" href="static/images/logos/favicon.png" />
+  <link rel="stylesheet" href="{% static 'css/styles.min.css' %}" />
+</head>
+<body>
+  {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> {% endcomment %}
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="/" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="static/images/logos/dark-logo.svg" width="180" alt="">
+                </a>
+                <p class="text-center">S.O.S FINANCE</p>
   
 
 
-<form class= "col-6 mx-auto mt-4 card p-3 bg-dark text-white" action=""  method="post" enctype="multipart/form-data">
+<form action=""  method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {% if messages %}
     <div class="alert alert-primary" role="alert" >   
@@ -12,7 +37,6 @@
       {% endfor %}
     </div>
   {% endif %}
-  <center><h2>FORGOT PASSWORD</h2></center>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email : </label>
     <input type="text" name = 'email' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -24,8 +48,8 @@
 
   <button type="submit" class="btn btn-primary">Change Password</button>
 </form>
+<script src="static/libs/jquery/dist/jquery.min.js"></script>
+<script src="static/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-
-
-
-{% endblock %}
+</html>

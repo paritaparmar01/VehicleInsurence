@@ -4,8 +4,8 @@ from django.db import models
 
 
 class Users(models.Model):
-    email = models.CharField(primary_key=True, max_length=59)
     name = models.CharField(max_length=255)
+    email = models.CharField(primary_key=True, max_length=59)
     password = models.CharField(max_length=42)
 
 class CombinedInfo(models.Model):
@@ -68,23 +68,27 @@ class PolicyIssue(models.Model):
 
 
 class InsuranceEnquiry(models.Model):
-    name = models.CharField(max_length=255)
     mobile = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
     email = models.EmailField()
 
 
 class VehicleInformation(models.Model):
-    # insurance_enquiry = models.ForeignKey(InsuranceEnquiry, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255,null=True)
-    mobile = models.CharField(max_length=10,null=True)
+    # Your existing field
+    mobile = models.CharField(max_length=10, null=True)
+    name = models.CharField(max_length=255, null=True)
     email = models.EmailField(null=True)
     vehicle_number = models.CharField(max_length=255)
-    rc_book = models.CharField(max_length=255)
-    rc_book_image = models.ImageField(upload_to='rc_book_images/')
-    previous_policy = models.CharField(max_length=255)
-    previous_policy_image = models.ImageField(
-        upload_to='previous_policy_images/')
-    end_date = models.DateField()
+    rc_book = models.CharField(max_length=255, null=True)
+    rc_book_image = models.ImageField(upload_to='rc_book_images/', null=True, blank=True)
+    previous_policy = models.CharField(max_length=255, null=True)
+    previous_policy_image = models.ImageField(upload_to='previous_policy_images/', null=True, blank=True)
+    
+    # Modified field with null=True
+    end_date = models.DateField(null=True)
+
+    def __str__(self):
+        return self.vehicle_number
 
 
 class LoanEnquiry(models.Model):

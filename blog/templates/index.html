@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="static/css/styles.min.css" />
 </head>
 <body>
-  {% if 'isLoggedin' not in request.session %}
+  {% comment %} {% if 'isLoggedin' not in request.session %}
     <script>window.location.href = "/login/";</script>
-{% endif %}
+{% endif %} {% endcomment %}
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -107,7 +107,7 @@
               <span class="hide-menu">AUTH</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <a class="sidebar-link" href="login/" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
@@ -115,7 +115,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+              <a class="sidebar-link" href="login/" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>

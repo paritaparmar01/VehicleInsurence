@@ -13,10 +13,14 @@ from openpyxl.utils.cell import get_column_letter
 from openpyxl import Workbook
 from decimal import Decimal, DecimalException
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.contrib.auth.models import User
+from django.utils.dateparse import parse_date
+from urllib.parse import urlparse
 # from .forms import *
 
-def index(request):
-    return render(request, 'base.html')
+# def index(request):
+#     return render(request, 'base.html')
 
 def home(request):
     return render(request, 'index.html')
@@ -102,25 +106,38 @@ def try_button(request):
     return render(request, 'try.html',{'data':data, 'data2' : data2})
     
 
+from django.shortcuts import render, redirect
+from django.db import IntegrityError
+from .models import Users
+
 def register(request):
     if request.method == 'POST':
-        # Extract common data
-        email = request.POST.get('email')
+        # Extract data from the POST request
         name = request.POST.get('name')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        # Save Insurance Enquiry
-        Users.objects.create(
-            email=email,
-            name = name,
-            password = password
-        )
-
-        # context = {"check": True}
-
-        return render(request, 'login.html')
+        # Check if all required fields are present
+        if name and email and password:
+            try:
+                # Create a new user object and save it to the database
+                user = Users.objects.create(
+                    name=name,
+                    email=email,
+                    password=password
+                )
+                # Redirect to the login page
+                return redirect('login/')  # Assuming 'login' is the name of your login URL pattern
+            except IntegrityError:
+                # Handle the case where the email address already exists
+                return render(request, 'register.html', {'error_message': 'This email address is already registered.'})
+        else:
+            # Handle the case where required fields are missing
+            return render(request, 'register.html', {'error_message': 'All fields are required.'})
     
+    # Render the registration form if it's a GET request
     return render(request, 'register.html')
+
 
 
 # def login(request):
@@ -145,25 +162,19 @@ def register(request):
 
 def login(request):
     if request.method == 'POST':
-        # Extract common data
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        # user = authenticate(request, username = username, password = password)
-
-        # if user is not None:
-        #     login(request, user)
         try:
-            user = Users.objects.get(email = email, password = password)
-            if Users:
-                request.session['Users']=user
-                return render(request, 'index.html')
-        except:
-                return render(request, 'login.html')
-    
+            # Assuming you have a custom User model named Users
+            user = Users.objects.get(email=email, password=password)
+            if user:
+                request.session['user'] = user.id
+                return redirect('home')  # Redirect to the home page
+        except Users.DoesNotExist:
+            pass  # Handle invalid login here
+
     return render(request, 'login.html')
-
-
 # def login(request):
 #     if request.method == 'POST':
 #         # Extract common data
@@ -381,24 +392,28 @@ def enquiryOldCust(request):
 
     return render(request, 'enquiry_oldcust.html')
 
+from django.shortcuts import render
+from django.utils.dateparse import parse_date
+from .models import InsuranceEnquiry, VehicleInformation
+
 def enquiryNewCust(request):
-    data = InsuranceEnquiry.objects.all()
-    data = VehicleInformation.objects.all()
+    enquiries = InsuranceEnquiry.objects.all()
+    vehicles = VehicleInformation.objects.all()
+
     if request.method == 'POST':
         # Extract common data
-        name = request.POST.get('name')
         number = request.POST.get('number')
+        name = request.POST.get('name')
         email = request.POST.get('email')
 
         # Save Insurance Enquiry
         enquiry = InsuranceEnquiry.objects.create(
-            name=name,
             mobile=number,
+            name=name,
             email=email
         )
 
         # Extract and save vehicle-related data
-        mobile = number
         vehicle_numbers = request.POST.getlist('vehicle_number[]')
         rc_books = request.POST.getlist('rc_book_radio')
         previous_policies = request.POST.getlist('previous_policy_radio')
@@ -406,8 +421,7 @@ def enquiryNewCust(request):
 
         # Extract and save RC Book images and Previous Policy images separately
         rc_book_images = request.FILES.getlist('rc_book_image[]')
-        previous_policy_images = request.FILES.getlist(
-            'previous_policy_image[]')
+        previous_policy_images = request.FILES.getlist('previous_policy_image[]')
 
         # List to store VehicleInformation objects
         vehicle_list = []
@@ -415,38 +429,53 @@ def enquiryNewCust(request):
         for i in range(len(vehicle_numbers)):
             vehicle_number = vehicle_numbers[i]
             rc_book = rc_books[i]
-            end_date = end_dates[i]
+            end_date_str = end_dates[i]
+
+            # Parse the date string to a valid date object
+            end_date = parse_date(end_date_str)
 
             # Check if the index is within bounds
             if i < len(rc_book_images) and i < len(previous_policies) and i < len(previous_policy_images):
                 rc_book_image = rc_book_images[i]
                 previous_policy = previous_policies[i]
                 previous_policy_image = previous_policy_images[i]
+            else:  # If RC book or previous policy fields are not provided
+                rc_book = "N/A"
+                rc_book_image = None
+                previous_policy = "N/A"
+                previous_policy_image = None
 
-                vehicle = VehicleInformation(
-                    # insurance_enquiry=enquiry,
-                    mobile=number,
-                    vehicle_number=vehicle_number,
-                    rc_book=rc_book,
-                    rc_book_image=rc_book_image,
-                    previous_policy=previous_policy,
-                    previous_policy_image=previous_policy_image,
-                    end_date=end_date
-                )
+            # Create VehicleInformation object and associate with InsuranceEnquiry
+            vehicle = VehicleInformation.objects.create(
+                mobile=number,
+                name=name,  # Pass the name to each VehicleInformation object
+                email=email,  # Pass the email to each VehicleInformation object
+                vehicle_number=vehicle_number,
+                rc_book=rc_book,
+                rc_book_image=rc_book_image,
+                previous_policy=previous_policy,
+                previous_policy_image=previous_policy_image,
+                end_date=end_date
+            )
 
-                vehicle_list.append(vehicle)
+            vehicle_list.append(vehicle)
 
-        # Use bulk_create to insert all records at once
-        if VehicleInformation.objects.bulk_create(vehicle_list):
-            # Redirect to the desired URL after successful form submission
-            context = {"check": True}
-            return render(request, 'enquiry_newcust.html', context)
+        # Redirect to the desired URL after successful form submission
+        context = {"check": True}
+        return render(request, 'enquiry_newcust.html', context)
 
-    return render(request, 'enquiry_newcust.html',{'data':data})
+    return render(request, 'enquiry_newcust.html', {'enquiries': enquiries, 'vehicles': vehicles})
+
+
 
 def policy_issue(request):
-    data = PolicyIssue.objects.all()
+    data = PolicyIssue.objects.all().order_by('-date')
+    paginator = Paginator(data, 100)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    
     if request.method == 'POST':
+        # Extracting form data
         date = request.POST.get('date')
         name = request.POST.get('name')
         number = request.POST.get('number')
@@ -486,11 +515,9 @@ def policy_issue(request):
             except ValueError:
                 return HttpResponse('Invalid date format. Please use YYYY-MM-DD.')
         else:
-            # return HttpResponse('Date is required.')
-            date = datetime()
+            date = datetime.now()
         
-        
-
+        # Create a new PolicyIssue instance
         PolicyIssue.objects.create(
             date=date,
             name=name,
@@ -522,14 +549,12 @@ def policy_issue(request):
             netProfitResult=netProfitResult,
             Executive=Executive,
             DSA=DSA
-            
-            
         )
 
-        context = {"check" : True,}        # Redirect to the desired URL after successful form submission
+        context = {"check": True}  # Assuming you have a check variable for success message
         return render(request, 'policyissue.html', context=context)
 
-    return render(request, 'policyissue.html',{'data':data})
+    return render(request, 'policyissue.html', {'page_obj': page_obj})
 
 def upload_excel(request):
     if request.method == 'POST' and request.FILES.get('excel_file'):
@@ -591,39 +616,60 @@ def parse_date(date_str):
         except ValueError:
             pass
     raise ValueError('Invalid date format')
+from urllib.parse import urlparse
 
 def loan(request):
-    data = LoanEnquiry.objects.all()
     if request.method == 'POST':
-        # Extract common data
+        # Extracting form data
         name = request.POST.get('name')
         number = request.POST.get('number')
         email = request.POST.get('email')
-
-        # Save Loan Enquiry
+        
+        # Saving Loan Enquiry
         loan_enquiry = LoanEnquiry.objects.create(
             name=name,
             number=number,
             email=email
         )
 
-        # Extract and save document-related data
-        rc_books = request.POST.getlist('rc_book[]')
-        rc_book_images = request.FILES.getlist('rc_book_image[]')
+        # Handling file uploads for RC book image and documents
+        rc_book_radio = request.POST.get('rc_book_radio')
+        rc_book_image = None  # Initialize rc_book_image as None
+        if rc_book_radio == 'yes':
+            # If RC book is provided, get the image file
+            rc_book_image = request.FILES.get('rc_book_image')
+
         documents = request.FILES.getlist('documents[]')
 
-        for rc_book, rc_book_image, document in zip(rc_books, rc_book_images, documents):
+        # Saving document data
+        for document in documents:
+            # For each document file, create a Document object and link it to the LoanEnquiry
             Document.objects.create(
                 loan_enquiry=loan_enquiry,
-                rc_book=rc_book,
-                rc_book_image=rc_book_image,
+                rc_book=rc_book_radio,  # Assuming you want to save the radio button value
+                rc_book_image=rc_book_image,  # Pass rc_book_image here
                 document=document
             )
 
-        context = {"check": True}
-        return render(request, 'loan.html', context=context)
+        # Redirect to the same page to avoid resubmission
+        return redirect('loan')
 
-    return render(request, 'loan.html',{'data':data})
+    # Fetching all LoanEnquiry objects along with related Document objects
+    data = LoanEnquiry.objects.prefetch_related('document_set').all()
+
+    # Extracting image names from URLs
+    for item in data:
+        for doc in item.document_set.all():
+            if doc.rc_book_image:  # Check if rc_book_image is not None
+                parsed_url = urlparse(doc.rc_book_image.url)
+                doc.rc_book_image_name = parsed_url.path.split('/')[-1]
+            else:
+                doc.rc_book_image_name = None
+
+    # Rendering the page with existing data
+    return render(request, 'loan.html', {'data': data})
+
+
 import pandas as pd
 from django.shortcuts import render
 from .models import PolicyIssue

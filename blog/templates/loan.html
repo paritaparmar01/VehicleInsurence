@@ -1,10 +1,14 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Records</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Insurance Enquiry Form</title>
-<style>
+    <style>
         .form-group {
             margin-bottom: 10px;
         }
@@ -15,8 +19,8 @@
         }
 
         .form-control {
-            width: 100%;
-            padding: 8px;
+            width: 25%;
+            padding: 3px;
             box-sizing: border-box;
         }
 
@@ -31,111 +35,197 @@
             border: none;
             outline: none;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
 
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100px;
+        }
+
+        .document-links {
+            margin-top: 5px;
+        }
     </style>
 </head>
 
 <body>
-
-    {% if check == True %}
-    <center><h1 style="color: green;">Data Submitted successfully.</h1></center>
-    {% endif %}
-    <form class="card my-3" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-    <div class="row align-items-start mt-5 fw-bold">
-        <div class="col-6 offset-3">
-            <div class="container-fluid">
-                <form class="card my-3" method="POST" enctype="multipart/form-data">
-                    <h2 class='card mt-1 text-center bg-info'>Loan Enquiry</h2>
-                    <div class="mb-3 mx-5 mt-5">
-                        <label for="exampleInputEmail1" class="form-label">Name<span class="text-danger">*</span></label>
-                        <input type="text" name='name' class="form-control" required>
-                    </div>
-                    <div class='row d-flex'>
-                        <div class="col-4 mb-3 mx-5">
-                            <label for="exampleInputNumber" class="form-label">Mobile Number<span class="text-danger">*</span></label>
-                            <input type="tel" name='number' class="form-control" pattern="^[0-9]{10}$" maxlength="10"
-                                required placeholder="Enter 10-digit number">
-                        </div>
-                        <div class="col-4 mb-3 mx-5">
-                            <label for="exampleInputEmail1" class="form-label">Email </label>
-                            <input type="email" class="form-control" name='email' id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                       <!-- RC Book field with radio buttons -->
-                       <div class="mb-3 mx-5">
-                        <p class="form-label fw-bold">RC Book</p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rc_book_radio" id="rcBookRadioYes" value="yes" onchange="toggleRcBookImageField()">
-                            <label class="form-check-label" for="rcBookRadioYes">Yes</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="rc_book_radio" id="rcBookRadioNo" value="no" onchange="toggleRcBookImageField()">
-                            <label class="form-check-label" for="rcBookRadioNo">No</label>
-                        </div>
-                    </div>
-
-                    <!-- RC Book image field -->
-                    <div id="rcBookInputField" class="mb-3 mx-5" style="display: none;">
-                        <label for="rcBook" class="form-label fw-bold">RC Book (Image/PDF)</label>
-                        <input type="file" name="rc_book_image[]">
-                    </div>
-
-                        <!-- Document Upload Section -->
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div id="documentContainer">
-                                        <!-- Default Document Input Field -->
-                                        <div class="document-fields" id="defaultDocumentField">
-                                            <div class="mb-3 mx-5">
-                                                <label for="document" class="form-label fw-bold">Document</label>
-                                                <input type="file" class="form-control" name="documents[]" required>
-                                                <!-- Disabled Delete Button for Default Document Field -->
-                                                <button type="button" class="delete-button" disabled>&times;</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Button to Add More Documents -->
-                                    <button type="button" onclick="addDocumentField()" class="btn btn-primary mb-3 mx-5">Add Document</button> 
-
-                                    <!-- Button to Upload Documents -->
-                                    {% comment %} <button type="submit" class="btn btn-success mx-5">Upload Documents</button> {% endcomment %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Button to Submit the Form -->
-                    <button type="submit" class="btn btn-primary col-10 mb-3 mx-5">Submit</button>
-                </form>
-<center><h4 style="color: blue;">Data Records</h4></center>
-  <table border="5">
-    <tr>
-      <th style="border: 2px solid black;">mobile</th>
-      <th style="border: 2px solid black;">name</th>
-      <th style="border: 2px solid black;">email</th>
-      <th style="border: 2px solid black;">RC book</th>
-      <th style="border: 2px solid black;">RC book image</th>
-      <th style="border: 2px solid black;">Document</th>
-      </tr>
-      {% for i in data %}
-      <tr>
-        <td style="border: 2px solid black;">{{i.number}}</td>
-        <td style="border: 2px solid black;">{{i.name}}</td>
-        <td style="border: 2px solid black;">{{i.email}}</td>
-        <td style="border: 2px solid black;">{{i.rc_book}}</td>
-        <td style="border: 2px solid black;">{{i.rc_book_image}}</td>
-        <td style="border: 2px solid black;">{{i.document}}</td>
-      </tr>
-      {% endfor %}
-  </table>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Phone Number to Search" id="searchInput">
+                    <button class="btn btn-outline-secondary" type="button" onclick="searchPhoneNumber()">Search</button>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Loan Enquiry</button>
+                <button type="button" class="btn btn-success" onclick="downloadDataRecords()">
+                    <i class="bi bi-download"></i> Download
+                </button>
             </div>
         </div>
     </div>
+    <br>
+    
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-dialog-end">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Loan Enquiry Form</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% if check == True %}
+                    <center><h1 style="color: green;">Data Submitted successfully.</h1></center>
+                    {% endif %}
+                    <form class="card my-3" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row align-items-start mt-5 fw-bold">
+                            <div class="col-6 offset-3">
+                                <div class="container-fluid">
+                                    <form class="card my-3" method="POST" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">Name<span class="text-danger">*</span></label>
+                                            <input type="text" name='name' class="form-control" required>
+                                        </div>
+                                        <div class='row d-flex'>
+                                            <div class="mb-3">
+                                                <label for="exampleInputNumber" class="form-label">Mobile Number<span class="text-danger">*</span></label>
+                                                <input type="tel" name='number' class="form-control" pattern="^[0-9]{10}$" maxlength="10" required placeholder="Enter 10-digit number">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">Email </label>
+                                                <input type="email" class="form-control" name='email' id="exampleInputEmail1" aria-describedby="emailHelp">
+                                            </div>
+                                            <!-- RC Book field with radio buttons -->
+                                            <div class="mb-3">
+                                                <p class="form-label fw-bold">RC Book</p>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="rc_book_radio" id="rcBookRadioYes" value="yes" onchange="toggleRcBookImageField()">
+                                                    <label class="form-check-label" for="rcBookRadioYes">Yes</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="rc_book_radio" id="rcBookRadioNo" value="no" onchange="toggleRcBookImageField()">
+                                                    <label class="form-check-label" for="rcBookRadioNo">No</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- RC Book image field -->
+                                            <div id="rcBookInputField" class="mb-3" style="display: none;">
+                                                <label for="rcBook" class="form-label fw-bold">RC Book (Image/PDF)</label>
+                                                <input type="file" name="rc_book_image[]">
+                                            </div>
+
+                                            <!-- Document Upload Section -->
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div id="documentContainer">
+                                                            <!-- Default Document Input Field -->
+                                                            <div class="document-fields" id="defaultDocumentField">
+                                                                <div class="mb-3">
+                                                                    <label for="document" class="form-label fw-bold">Document</label>
+                                                                    <input type="file" class="form-control" name="documents[]" required>
+                                                                    <!-- Disabled Delete Button for Default Document Field -->
+                                                                    <button type="button" class="delete-button" disabled>&times;</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Button to Add More Documents -->
+                                                        <button type="button" onclick="addDocumentField()" class="btn btn-primary mb-3">Add Document</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!-- Button to Submit the Form -->
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    {% comment %} <center><h4 style="color: blue;">Data Records</h4></center> {% endcomment %}
+    <center><h4 style="color: blue;">Data Records</h4></center>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Email</th>
+                <th>RC Book</th>
+                <th>RC Book Image</th>
+                <th>Documents</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.number }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.document.rc_book }}</td>
+                <td><img src="{{ item.document.rc_book_image.url }}" alt="RC Book Image"></td>
+                <td class="document-links">
+                    {% for doc in item.document_set.all %}
+                    <a href="{{ doc.document.url }}" target="_blank">{{ doc.document.name }}</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Download Data Records button -->
+    
     <script>
+        function downloadDataRecords() {
+            var table = document.getElementById("dataRecords");
+            var rows = table.querySelectorAll("tr");
+            var csv = [];
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td");
+                for (var j = 0; j < cols.length; j++) {
+                    row.push(cols[j].innerText);
+                }
+                csv.push(row.join(","));
+            }
+            var csvString = csv.join("\n");
+            var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", "data_records.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert("Your browser does not support downloading files.");
+            }
+        }
+
         function toggleRcBookImageField() {
             var rcBookRadioYes = document.getElementById('rcBookRadioYes');
             var rcBookInputField = document.getElementById('rcBookInputField');
@@ -184,9 +274,25 @@
                 parentDiv.remove();
             }
         }
-    </script> 
-</form>
-
-
+    
+        function searchPhoneNumber() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("dataRecords");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
