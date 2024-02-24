@@ -14,6 +14,7 @@ urlpatterns = [
     path('login/', views.login, name="login"),
     path('forgotpwd/', views.forgotPwd, name="forgotpwd"),
     path('policyissue/', views.policy_issue, name="policy_issue"),
+    path('calendar/', views.calendar, name='calendar'),
     path('uploadcsvpolisyissue/', views.upload_policy, name="upload_policy"),
     path('uploadexcel/', upload_excel, name='upload_excel'),
     #path('enquiry/', views.enquiry, name="enquiry"),

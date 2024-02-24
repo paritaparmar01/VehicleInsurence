@@ -17,13 +17,18 @@ from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.utils.dateparse import parse_date
 from urllib.parse import urlparse
+from django.utils.timezone import make_aware
 # from .forms import *
 
 # def index(request):
 #     return render(request, 'base.html')
 
 def home(request):
-    return render(request, 'index.html')
+    username = request.user.username
+    return render(request, 'index.html', {'username': username})
+
+def calendar(request):
+    return render(request, 'calendar.html')
 
 def try_policy(request):
     return render(request, 'trypolicy.html')
@@ -159,22 +164,25 @@ def register(request):
 #             return render(request, 'login.html')
     
 #     return render(request, 'login.html')
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        try:
-            # Assuming you have a custom User model named Users
-            user = Users.objects.get(email=email, password=password)
-            if user:
-                request.session['user'] = user.id
-                return redirect('home')  # Redirect to the home page
-        except Users.DoesNotExist:
-            pass  # Handle invalid login here
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to the home page or any other desired page
+            return redirect('home')
+        else:
+            # Invalid login
+            messages.error(request, 'Invalid email or password. Please try again.')
 
     return render(request, 'login.html')
+
 # def login(request):
 #     if request.method == 'POST':
 #         # Extract common data
@@ -468,8 +476,26 @@ def enquiryNewCust(request):
 
 
 
+from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.http import HttpResponse
+from django.core.paginator import Paginator
+from datetime import datetime
+from django.utils.timezone import make_aware
+from .models import PolicyIssue
+
 def policy_issue(request):
+    # Existing code to fetch all data
     data = PolicyIssue.objects.all().order_by('-date')
+
+    # Filter data based on the end date if provided in the form
+    end_date = request.POST.get('end_date')
+    if end_date:
+        try:
+            end_date = make_aware(datetime.strptime(end_date, '%Y-%m-%d'))
+            data = data.filter(PE_date__lte=end_date)
+        except ValueError:
+            return HttpResponse('Invalid end date format. Please use YYYY-MM-DD.')
+
     paginator = Paginator(data, 100)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
@@ -556,6 +582,7 @@ def policy_issue(request):
 
     return render(request, 'policyissue.html', {'page_obj': page_obj})
 
+
 def upload_excel(request):
     if request.method == 'POST' and request.FILES.get('excel_file'):
         excel_file = request.FILES['excel_file']
@@ -618,56 +645,44 @@ def parse_date(date_str):
     raise ValueError('Invalid date format')
 from urllib.parse import urlparse
 
+from django.shortcuts import render, redirect
+from .models import LoanEnquiry, Document
+
 def loan(request):
     if request.method == 'POST':
-        # Extracting form data
-        name = request.POST.get('name')
-        number = request.POST.get('number')
-        email = request.POST.get('email')
-        
-        # Saving Loan Enquiry
-        loan_enquiry = LoanEnquiry.objects.create(
-            name=name,
-            number=number,
-            email=email
-        )
+        form = LoanEnquiry(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the main loan enquiry data
+            loan_enquiry = form.save(commit=False)
+            loan_enquiry.rc_book = request.POST.get('rc_book_radio', 'no')  # Assuming you have an rc_book field in your LoanEnquiry model
+            loan_enquiry.save()
 
-        # Handling file uploads for RC book image and documents
-        rc_book_radio = request.POST.get('rc_book_radio')
-        rc_book_image = None  # Initialize rc_book_image as None
-        if rc_book_radio == 'yes':
-            # If RC book is provided, get the image file
-            rc_book_image = request.FILES.get('rc_book_image')
+            # Save RC book image if provided
+            if loan_enquiry.rc_book == 'yes':
+                rc_book_image = request.FILES.get('rc_book_image')
+                if rc_book_image:
+                    loan_enquiry.rc_book_image = rc_book_image
+                    loan_enquiry.save()
 
-        documents = request.FILES.getlist('documents[]')
+            # Save documents
+            documents = request.FILES.getlist('documents[]')
+            for document in documents:
+                Document.objects.create(loan_enquiry=loan_enquiry, document=document)
 
-        # Saving document data
-        for document in documents:
-            # For each document file, create a Document object and link it to the LoanEnquiry
-            Document.objects.create(
-                loan_enquiry=loan_enquiry,
-                rc_book=rc_book_radio,  # Assuming you want to save the radio button value
-                rc_book_image=rc_book_image,  # Pass rc_book_image here
-                document=document
-            )
+            # Redirect after POST
+            return redirect('loan')
 
-        # Redirect to the same page to avoid resubmission
-        return redirect('loan')
+    else:
+        form = LoanEnquiry()
 
     # Fetching all LoanEnquiry objects along with related Document objects
     data = LoanEnquiry.objects.prefetch_related('document_set').all()
 
-    # Extracting image names from URLs
-    for item in data:
-        for doc in item.document_set.all():
-            if doc.rc_book_image:  # Check if rc_book_image is not None
-                parsed_url = urlparse(doc.rc_book_image.url)
-                doc.rc_book_image_name = parsed_url.path.split('/')[-1]
-            else:
-                doc.rc_book_image_name = None
+    # Rendering the page with existing data and form
+    return render(request, 'loan.html', {'data': data, 'form': form})
 
-    # Rendering the page with existing data
-    return render(request, 'loan.html', {'data': data})
+
+
 
 
 import pandas as pd

@@ -9,9 +9,15 @@
   <link rel="stylesheet" href="static/css/styles.min.css" />
 </head>
 <body>
+  {% comment %} {% if 'user' not in request.session %}
+    <script>window.location.href = "/login/";</script>
+{% endif %} {% endcomment %}
   {% comment %} {% if 'isLoggedin' not in request.session %}
     <script>window.location.href = "/login/";</script>
 {% endif %} {% endcomment %}
+{% if user.is_authenticated %}
+    <p>Hello, {{ username }}</p>
+  {% endif %}
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -71,6 +77,14 @@
               <span class="hide-menu">Policy Issue</span>
             </a>
           </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="calendar/" aria-expanded="false">
+              <span>
+                <i class="ti ti-article"></i>
+              </span>
+              <span class="hide-menu">calendar</span>
+            </a>
+          </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
                 <span>
@@ -115,7 +129,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="login/" aria-expanded="false">
+              <a class="sidebar-link" href="register/" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -178,7 +192,7 @@
                   <img src="static/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
-                  <div class="message-body">
+                  {% comment %} <div class="message-body">
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
                       <p class="mb-0 fs-3">My Profile</p>
@@ -190,8 +204,8 @@
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
-                    </a>
-                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    </a> {% endcomment %}
+                    <a href="/login/" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>
               </li>

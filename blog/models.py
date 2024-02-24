@@ -90,15 +90,19 @@ class VehicleInformation(models.Model):
     def __str__(self):
         return self.vehicle_number
 
-
 class LoanEnquiry(models.Model):
-    name = models.CharField(max_length=255)
-    number = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
+    number = models.CharField(max_length=15)
     email = models.EmailField()
+    rc_book = models.CharField(max_length=3, choices=[('yes', 'Yes'), ('no', 'No')], default='no')
+    rc_book_image = models.ImageField(upload_to='rc_book_images/', null=True, blank=True)
 
+    def __str__(self):
+        return self.name
 
 class Document(models.Model):
     loan_enquiry = models.ForeignKey(LoanEnquiry, on_delete=models.CASCADE)
-    rc_book = models.CharField(max_length=255)
-    rc_book_image = models.ImageField(upload_to='rc_book_images/')
     document = models.FileField(upload_to='documents/')
+
+    def __str__(self):
+        return self.document.name

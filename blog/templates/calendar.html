@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Policy End Dates Calendar</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="calendar">
+    <!-- Calendar display logic goes here -->
+    {% for policy in policies %}
+    <div class="calendar-item">
+        <span class="policy-name">{{ policy.name }}</span>
+        <span class="policy-number">{{ policy.number }}</span>
+        <span class="vehicle-number">{{ policy.vehicle_number }}</span>
+        <!-- Add other fields as needed -->
+    </div>
+    {% endfor %}
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

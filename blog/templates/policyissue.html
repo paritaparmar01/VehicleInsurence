@@ -10,6 +10,58 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    /* Add your styles here */
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    /* Adjusted margin for the "Add Another Vehicle" button */
+    #addVehicleBtn {
+        margin-top: 10px;
+    }
+
+    /* Updated styles for the table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #f8f9fa; /* Light background color */
+    }
+
+    th,
+    td {
+        text-align: center;
+        padding: 10px;
+        border: 1px dotted black; /* Border style set to dotted */
+    }
+
+    th {
+        background-color: #6c757d; /* Dark background color for headers */
+        color: black;
+        border-width: 1.5pt; /* Border width for table header with 1.5pt thickness */
+    }
+
+    tr:nth-child(even) {
+        background-color: #e2e6ea; /* Light background color for even rows */
+    }
+
+    /* Hover effect */
+    tr:hover {
+        background-color: #d4d8db; /* Slightly darker background on hover */
+    }
+</style>
 </head>
 <body>
     {% comment %} <div class="container mt-4">
@@ -27,9 +79,11 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-6 mb-3">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Phone Number to Search" id="searchInput">
-                    <button class="btn btn-outline-secondary" type="button" onclick="searchPhoneNumber()">Search</button>
+                <div class="container mt-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter Search Query" id="searchInput">
+                        <button class="btn btn-outline-secondary" type="button" onclick="search()">Search</button>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
@@ -40,7 +94,25 @@
             </div>
         </div>
     </div>
-
+    {% comment %} <form method="POST" action="{% url 'policy_issue' %}">
+        {% csrf_token %}
+        <!-- Other form fields -->
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date">
+        <button type="submit" style="background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+      border-radius: 12px;">Submit</button>
+    </form>
+     {% endcomment %}
 <!-- Modal -->
 <div class=" modal fade row justify-content-end" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-dialog-end col-md-6">
@@ -560,155 +632,215 @@
     <br>
     <br>
     
-    
-      <center><h4 style="color: blue;">Data Records</h4></center>
-      <table class="table table-bordered" id="dataRecords">
-    <tr>
-        <th style="border: 2px solid black;">Date</th>
-        <th style="border: 2px solid black;">Name</th>
-        <th style="border: 2px solid black;">Mobile</th>
-        <th style="border: 2px solid black;">Policy Number</th>
-        <th style="border: 2px solid black;">Vehicle Number</th>
-        <th style="border: 2px solid black;">Vehicle</th>
-        <th style="border: 2px solid black;">Location</th>
-        <th style="border: 2px solid black;">HP Bank</th>
-        <th style="border: 2px solid black;">Business Type</th>
-        <th style="border: 2px solid black;">Insurance Type</th>
-        <th style="border: 2px solid black;">Insurance Portal</th>
-        <th style="border: 2px solid black;">Insurance Company</th>
-        <th style="border: 2px solid black;">Payment</th>
-        <th style="border: 2px solid black;">Payment SOS</th>
-        <th style="border: 2px solid black;">Policy Start Date</th>
-        <th style="border: 2px solid black;">Policy End Date</th>
-        <th style="border: 2px solid black;">NCB</th>
-        <th style="border: 2px solid black;">Premium</th>
-        <th style="border: 2px solid black;">OD/Net Premium</th>
-        <th style="border: 2px solid black;">Commission</th>
-        <th style="border: 2px solid black;">Profit</th>
-        <th style="border: 2px solid black;">TDS</th>
-        <th style="border: 2px solid black;">Profit After TDS</th>
-        <th style="border: 2px solid black;">Net Profit</th>
-        <th style="border: 2px solid black;">Payout/Discount</th>
-        <th style="border: 2px solid black;">Executive</th>
-        <th style="border: 2px solid black;">DSA</th>
-    </tr>
-    {% for item in page_obj %}
-    <tr>
-        <td style="border: 2px solid black;">{{ item.date }}</td>
-        <td style="border: 2px solid black;">{{ item.name }}</td>
-        <td style="border: 2px solid black;">{{ item.number }}</td>
-        <td style="border: 2px solid black;">{{ item.p_number }}</td>
-        <td style="border: 2px solid black;">{{ item.v_number }}</td>
-        <td style="border: 2px solid black;">{{ item.Vehicle }}</td>
-        <td style="border: 2px solid black;">{{ item.Location }}</td>
-        <td style="border: 2px solid black;">{{ item.HP_bank }}</td>
-        <td style="border: 2px solid black;">{{ item.business_type }}</td>
-        <td style="border: 2px solid black;">{{ item.insurance_type }}</td>
-        <td style="border: 2px solid black;">{{ item.insurance_portal }}</td>
-        <td style="border: 2px solid black;">{{ item.I_company }}</td>
-        <td style="border: 2px solid black;">{{ item.payment }}</td>
-        <td style="border: 2px solid black;">{{ item.payment_sos }}</td>
-        <td style="border: 2px solid black;">{{ item.PS_date }}</td>
-        <td style="border: 2px solid black;">{{ item.PE_date }}</td>
-        <td style="border: 2px solid black;">{{ item.Ncb }}</td>
-        <td style="border: 2px solid black;">{{ item.Premium }}</td>
-        <td style="border: 2px solid black;">{{ item.odNetPremium }}</td>
-        <td style="border: 2px solid black;">{{ item.commissionPercentage }}</td>
-        <td style="border: 2px solid black;">{{ item.tdsPercentage }}</td>
-        <td style="border: 2px solid black;">{{ item.profit_after_tds }}</td>
-        <td style="border: 2px solid black;">{{ item.profit }}</td>
-        <td style="border: 2px solid black;">{{ item.netProfitResult }}</td>
-        <td style="border: 2px solid black;">{{ item.payoutDiscount }}</td>
-        <td style="border: 2px solid black;">{{ item.Executive }}</td>
-        <td style="border: 2px solid black;">{{ item.DSA }}</td>
-    </tr>
-    {% endfor %}
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<!-- Your HTML content here -->
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if end_date %}&end_date={{ end_date }}{% endif %}">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if end_date %}&end_date={{ end_date }}{% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if end_date %}&end_date={{ end_date }}{% endif %}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{% if end_date %}&end_date={{ end_date }}{% endif %}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<center><h4 style="color: blue;">Data Records</h4></center>
+<table class="table table-bordered" id="dataRecords">
+    <thead>
+        <tr>
+            <th style="border: 2px solid black;">Date</th>
+            <th style="border: 2px solid black;">Name</th>
+            <th style="border: 2px solid black;">Mobile</th>
+            <th style="border: 2px solid black;">Policy Number</th>
+            <th style="border: 2px solid black;">Vehicle Number</th>
+            <th style="border: 2px solid black;">Vehicle</th>
+            <th style="border: 2px solid black;">Location</th>
+            <th style="border: 2px solid black;">HP Bank</th>
+            <th style="border: 2px solid black;">Business Type</th>
+            <th style="border: 2px solid black;">Insurance Type</th>
+            <th style="border: 2px solid black;">Insurance Portal</th>
+            <th style="border: 2px solid black;">Insurance Company</th>
+            <th style="border: 2px solid black;">Payment</th>
+            <th style="border: 2px solid black;">Payment SOS</th>
+            <th style="border: 2px solid black;">Policy Start Date</th>
+            <th style="border: 2px solid black;">Policy End Date</th>
+            <th style="border: 2px solid black;">NCB</th>
+            <th style="border: 2px solid black;">Premium</th>
+            <th style="border: 2px solid black;">OD/Net Premium</th>
+            <th style="border: 2px solid black;">Commission</th>
+            <th style="border: 2px solid black;">Profit</th>
+            <th style="border: 2px solid black;">TDS</th>
+            <th style="border: 2px solid black;">Profit After TDS</th>
+            <th style="border: 2px solid black;">Net Profit</th>
+            <th style="border: 2px solid black;">Payout/Discount</th>
+            <th style="border: 2px solid black;">Payout Amount</th>
+            <th style="border: 2px solid black;">Executive</th>
+            <th style="border: 2px solid black;">DSA</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in page_obj %}
+        <tr>
+            <td style="border: 2px solid black;">{{ item.date }}</td>
+            <td style="border: 2px solid black;">{{ item.name }}</td>
+            <td style="border: 2px solid black;">{{ item.number }}</td>
+            <td style="border: 2px solid black;">{{ item.p_number }}</td>
+            <td style="border: 2px solid black;">{{ item.v_number }}</td>
+            <td style="border: 2px solid black;">{{ item.Vehicle }}</td>
+            <td style="border: 2px solid black;">{{ item.Location }}</td>
+            <td style="border: 2px solid black;">{{ item.HP_bank }}</td>
+            <td style="border: 2px solid black;">{{ item.business_type }}</td>
+            <td style="border: 2px solid black;">{{ item.insurance_type }}</td>
+            <td style="border: 2px solid black;">{{ item.insurance_portal }}</td>
+            <td style="border: 2px solid black;">{{ item.I_company }}</td>
+            <td style="border: 2px solid black;">{{ item.payment }}</td>
+            <td style="border: 2px solid black;">{{ item.payment_sos }}</td>
+            <td style="border: 2px solid black;">{{ item.PS_date }}</td>
+            <td style="border: 2px solid black;">{{ item.PE_date }}</td>
+            <td style="border: 2px solid black;">{{ item.Ncb }}</td>
+            <td style="border: 2px solid black;">{{ item.Premium }}</td>
+            <td style="border: 2px solid black;">{{ item.odNetPremium }}</td>
+            <td style="border: 2px solid black;">{{ item.commissionPercentage }}</td>
+            <td style="border: 2px solid black;">{{ item.profitResult }}</td>
+            <td style="border: 2px solid black;">{{ item.tdsPercentage }}</td>
+            <td style="border: 2px solid black;">{{ item.profitAfterTDSResult }}</td>
+            <td style="border: 2px solid black;">{{ item.netProfitResult }}</td>
+            <td style="border: 2px solid black;">{{ item.payoutDiscount }}</td>
+            <td style="border: 2px solid black;">{{ item.PayoutAmount }}</td>
+            <td style="border: 2px solid black;">{{ item.Executive }}</td>
+            <td style="border: 2px solid black;">{{ item.DSA }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+<!-- Your JavaScript code here -->
 <script>
-    function searchPhoneNumber() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("dataRecords");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[2]; // Change index to match the column where phone numbers are displayed
-          if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
+    function search() {
+        // Get the input value
+        var input = document.getElementById('searchInput').value.trim().toLowerCase();
+
+        // Get all tables in the document
+        var tables = document.querySelectorAll('table');
+
+        // Loop through each table
+        for (var i = 0; i < tables.length; i++) {
+            var rows = tables[i].querySelectorAll('tr');
+
+            // Loop through all table rows, starting from the second row (index 1)
+            for (var j = 1; j < rows.length; j++) {
+                var row = rows[j];
+                var found = false;
+
+                // Check each cell in the row for a match with the search query
+                for (var k = 0; k < row.cells.length; k++) {
+                    var cellText = row.cells[k].textContent.trim().toLowerCase();
+                    if (cellText.includes(input)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                // Toggle row visibility based on whether any cell in the row matches the search query
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             }
-          }
-        }
-      }
-</script>
-<script>
-    function downloadDataRecords() {
-        // Get the table
-        var table = document.getElementById("dataRecords");
-        var rows = table.querySelectorAll("tr");
-        
-        // Initialize CSV string
-        var csv = [];
-        
-        // Iterate over rows and columns to build CSV
-        for (var i = 0; i < rows.length; i++) {
-            var row = [], cols = rows[i].querySelectorAll("td, th");
-            for (var j = 0; j < cols.length; j++) {
-                // Remove any commas from the content to prevent CSV formatting issues
-                var content = cols[j].innerText.replace(/,/g, "");
-                row.push(content);
-            }
-            // Join row elements into a string and add to CSV
-            csv.push(row.join(","));
-        }
-        
-        // Combine rows into a single CSV string
-        var csvString = csv.join("\n");
-        
-        // Create a blob containing the CSV data
-        var blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
-        
-        // Create a download link
-        var link = document.createElement("a");
-        if (link.download !== undefined) { // Feature detection
-            // Set download link attributes
-            var url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", "data_records.csv");
-            
-            // Append link to the body
-            document.body.appendChild(link);
-            
-            // Trigger the download
-            link.click();
-            
-            // Remove the link from the body
-            document.body.removeChild(link);
-        } else {
-            alert("Your browser does not support downloading files.");
         }
     }
+    {% comment %} function search() {
+        // Get the input value
+        var input = document.getElementById('searchInput').value.trim().toLowerCase();
+        
+        // Get all rows of the table
+        var rows = document.querySelectorAll('table tr');
+
+        // Loop through all table rows, starting from the second row (index 1)
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+
+            // Check each cell in the row for a match with the search query
+            var found = false;
+            for (var j = 0; j < row.cells.length; j++) {
+                var cellText = row.cells[j].textContent.trim().toLowerCase();
+                if (cellText.includes(input)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            // Toggle row visibility based on whether any cell in the row matches the search query
+            if (found) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    }
+
+    // Function to reset table rows visibility
+    function resetRowVisibility() {
+        // Get all rows of the table
+        var rows = document.querySelectorAll('table tr');
+
+        // Loop through all table rows, starting from index 1 to skip the header row
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            row.style.display = ''; // Show all rows
+        }
+    }
+
+    // Function to trigger search across all pages
+    function searchAllPages() {
+        // Reset table rows visibility before searching
+        resetRowVisibility();
+        
+        // Trigger search function
+        search();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add event listener to pagination links
+        var paginationLinks = document.querySelectorAll('.pagination a');
+        paginationLinks.forEach(function(link) {
+            link.addEventListener('click', function(event) {
+                // Call search function after a small delay to ensure new page content is loaded
+                setTimeout(searchAllPages, 100);
+            });
+        });
+    });
+    function searchByEndDate() {
+        var endDate = document.getElementById('endDate').value;
+        var rows = document.querySelectorAll('table tr');
+        for (var i = 1; i < rows.length; i++) {
+            var row = rows[i];
+            var cellDate = new Date(row.cells[<index_of_end_date_column>].textContent.trim());
+            if (cellDate.getTime() === new Date(endDate).getTime()) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    } {% endcomment %}
 </script>
-<div class="pagination">
-  <span class="step-links">
-      {% if page_obj.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-      {% endif %}
-
-      <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-      </span>
-
-      {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">next</a>
-          <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-      {% endif %}
-  </span>
-</div>
 
 </body>
 </html>
